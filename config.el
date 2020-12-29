@@ -31,6 +31,12 @@
 ;; change `org-directory'. It must be set before org loads!
 (setq org-directory "~/org/")
 
+;; blog root
+(defconst blog-root
+  (if-let (IS-WINDOWS)
+      "d:/git/blog"
+   "~/Documents/git/www.lanhuzi.com1/blog"))
+
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
 (setq display-line-numbers-type t)
@@ -52,3 +58,29 @@
 ;;
 ;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
 ;; they are implemented.
+
+(setq package-archives '(("gnu"   . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")
+                         ("org-cn". "http://mirrors.tuna.tsinghua.edu.cn/elpa/org/")
+                         ("melpa" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")))
+
+;;修改windows版本的PATH路径。
+(if (eq system-type 'windows-nt)
+    (setenv "PATH"
+            (concat
+             "C:/ProgramData/scoop/shims" ";"
+             "C:/Users/gaowei/scoop/shims" ";"
+             (getenv "PATH")
+             )
+            )
+  nil)
+
+;; set projectile global ignore files
+(setq ignored-file-suffixes '(list ".obj" ".class"))
+
+;; (defun semgilo/add-to-ignored-file-suffixes (name)
+  ;; (add-to-list 'projectile-globally-ignored-file-suffixes name))
+;; (mapcar 'semgilo/add-to-ignored-file-suffixes ignored-file-suffixes)
+;; (add-to-list 'projectile-globally-ignored-file-suffixes '(".obj" ".class" ".tlog" ".log"))
+
+
+(setq confirm-kill-emacs nil)
