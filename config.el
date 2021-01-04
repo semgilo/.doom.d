@@ -41,7 +41,6 @@
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
 (setq display-line-numbers-type t)
 
-
 ;; Here are some additional functions/macros that could help you configure Doom:
 ;;
 ;; - `load!' for loading external *.el files relative to this one
@@ -63,16 +62,6 @@
                          ("org-cn". "http://mirrors.tuna.tsinghua.edu.cn/elpa/org/")
                          ("melpa" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")))
 
-;;修改windows版本的PATH路径。
-(if (eq system-type 'windows-nt)
-    (setenv "PATH"
-            (concat
-             "C:/ProgramData/scoop/shims" ";"
-             "C:/Users/gaowei/scoop/shims" ";"
-             (getenv "PATH")
-             )
-            )
-  nil)
 
 ;; set projectile global ignore files
 (setq ignored-file-suffixes '(list ".obj" ".class"))
@@ -84,3 +73,5 @@
 
 
 (setq confirm-kill-emacs nil)
+
+(setq system-time-locale "C")
