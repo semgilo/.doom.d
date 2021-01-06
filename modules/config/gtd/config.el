@@ -75,7 +75,7 @@ is nil, refile in the current file."
                (org-find-exact-headline-in-buffer headline))))
     (org-refile nil nil (list headline file nil pos))
     (save-buffer)
-    (kill-buffer-if-not-modified)))
+    (kill-buffer-if-not-modified (current-buffer))))
 
 (defun semgilo/refile-to-calender-actions ()
   "Move headline to calender actions"
