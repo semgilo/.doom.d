@@ -27,9 +27,22 @@
 ;; `load-theme' function. This is the default:
 (setq doom-theme 'doom-one)
 
+
+;; font
+
+
+
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
 (setq org-directory "~/org/")
+(setq org-roam-directory (expand-file-name "notes" org-directory))
+(defconst org-gtd-home (expand-file-name "gtd" org-directory))
+(defconst org-gtd-inbox-file (expand-file-name "inbox.org" org-gtd-home))
+(defconst org-gtd-calender-file (expand-file-name "calender.org" org-gtd-home))
+(defconst org-gtd-draft-file (expand-file-name "draft.org" org-gtd-home))
+(defconst org-gtd-trash-file (expand-file-name "trash.org" org-gtd-home))
+(defconst org-gtd-favorite-file (expand-file-name "favorite.org" org-gtd-home))
+(defconst org-gtd-history-file (expand-file-name "history.org" org-gtd-home))
 
 ;; blog root
 (defconst blog-root
@@ -71,7 +84,8 @@
 ;; (mapcar 'semgilo/add-to-ignored-file-suffixes ignored-file-suffixes)
 ;; (add-to-list 'projectile-globally-ignored-file-suffixes '(".obj" ".class" ".tlog" ".log"))
 
-
+;; exit and not ask.
 (setq confirm-kill-emacs nil)
 
+;; time format
 (setq system-time-locale "C")

@@ -1,3 +1,5 @@
+;;; config/gtd/config.el -*- lexical-binding: t; -*-
+
 (defun semgilo/hugo-new-post (name)
   (interactive "sInput post name: ")
   (setq fullpath
