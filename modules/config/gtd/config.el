@@ -1,5 +1,29 @@
 ;;; config/gtd/config.el -*- lexical-binding: t; -*-
 
+(defun semgilo/create-gtd-file-if-not-exist (path &optional category tag subtitles)
+  (when (not (file-exists-p path))
+    (find-file path)
+    (erase-buffer)
+    (when category
+      (insert (format "#+CATEGORY: %s\n" category)))
+    (when tag
+      (insert (format "#+FILETAGS: %s\n" tag)))
+    (when subtitles
+      (dolist (i subtitles)
+        (insert (format "\* %s\n" i))))
+    (save-buffer)
+    (kill-current-buffer)
+    ))
+
+;; (dolist (i '("actions" "projects")) (insert i))
+
+(after! org
+  (semgilo/create-gtd-file-if-not-exist org-gtd-inbox-file "Inbox" "INBOX")
+  (semgilo/create-gtd-file-if-not-exist org-gtd-calender-file "Calender" "CALENDER" '("Actions" "Projects"))
+  (semgilo/create-gtd-file-if-not-exist org-gtd-history-file "History" "HISTORY")
+  (semgilo/create-gtd-file-if-not-exist org-gtd-favorite-file "Favorite" "FAVORITE")
+  (semgilo/create-gtd-file-if-not-exist org-gtd-trash-file "Trash" "TRASH"))
+
 (after! org
   ;; To speed up startup, don't put to init section
   (setq org-agenda-files (setq  org-agenda-files (list org-gtd-home))
@@ -44,7 +68,7 @@
                              (org-gtd-favorite-file :maxlevel . 3))))
 
 ;;; Refiling
-(defun org-refile-to-datetree (&optional file)
+(defun semgile/org-refile-to-datetree (&optional file)
   "Refile a subtree to a datetree corresponding to it's timestamp.
 The current time is used if the entry has no timestamp. If FILE
 is nil, refile in the current file."
@@ -66,6 +90,10 @@ is nil, refile in the current file."
         (org-paste-subtree 4)
         (widen)
         ))
+    (save-buffer)
+    (kill-current-buffer)
+    (switch-to-buffer "*Org Agenda(g)*")
+    (org-agenda-redo-all)
     )
   )
 
@@ -75,50 +103,18 @@ is nil, refile in the current file."
                (org-find-exact-headline-in-buffer headline))))
     (org-refile nil nil (list headline file nil pos))
     (save-buffer)
-    (kill-buffer-if-not-modified (current-buffer))))
-
-(defun semgilo/refile-to-calender-actions ()
-  "Move headline to calender actions"
-  (interactive)
-  (semgilo/org-refile org-gtd-calender-file "Actions")
-  (kill-buffer "*Org Agenda(g)*")
-  (org-agenda () "g")
-  )
-
-(defun semgilo/refile-to-calender-projects ()
-  "Move headline to calender projects"
-  (interactive)
-  (semgilo/org-refile org-gtd-calender-file "Projects")
-
-  (kill-buffer "*Org Agenda(g)*")
-  (org-agenda () "g")
-  )
-
-(defun semgilo/refile-to-history-actions ()
-  "Move headline to history actions"
-  (interactive)
-  (semgilo/org-refile org-gtd-history-file "Actions")
-  (kill-buffer "*Org Agenda(g)*")
-  (org-agenda () "g")
-  )
-
-(defun semgilo/refile-to-history-projects ()
-  "Move headline to history projects"
-  (interactive)
-  (semgilo/org-refile org-gtd-history-file "Projects")
-  (kill-buffer "*Org Agenda(g)*")
-  (org-agenda () "g")
-  )
-
+    (kill-buffer-if-not-modified (current-buffer))
+    (switch-to-buffer "*Org Agenda(g)*")
+    (org-agenda-redo-all)))
 
 (defun semgilo/handle-outline-state-to-next ()
   "When todo keyword from todo to PROJECT/NEXT, refile outline to calender."
   (when (string= org-state "NEXT")
-    (semgilo/refile-to-calender-actions))
+    (semgilo/org-refile org-gtd-calender-file "Actions"))
   (when (string= org-state "PROJECT")
-    (semgilo/refile-to-calender-projects))
+    (semgilo/org-refile org-gtd-calender-file "Projects"))
   (when (or (string= org-state "DONE") (string= org-state "CANCEL"))
-    (semgilo/refile-to-history-actions))
+    (semgilo/org-refile-to-datetree org-gtd-history-file))
   )
 
 (after! org
@@ -205,3 +201,13 @@ is nil, refile in the current file."
               ))))))
 
 (add-hook! org-mode (electric-indent-local-mode -1))
+
+
+;; org-roam
+(after! org-roam
+  (setq org-roam-capture-templates
+      '(
+        ("d" "problem note" plain (function org-roam-capture--get-point)
+         "\* 问题描述\n\n\* 问题分析\n\n\* 解决方案\n"
+         :file-name "${slug}"
+         :head "#+title: ${title}\n#+roam_alias:\n\n"))))
