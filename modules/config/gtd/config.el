@@ -68,7 +68,7 @@
                              (org-gtd-favorite-file :maxlevel . 3))))
 
 ;;; Refiling
-(defun semgile/org-refile-to-datetree (&optional file)
+(defun semgilo/org-refile-to-datetree (&optional file)
   "Refile a subtree to a datetree corresponding to it's timestamp.
 The current time is used if the entry has no timestamp. If FILE
 is nil, refile in the current file."
@@ -193,8 +193,7 @@ is nil, refile in the current file."
                      (org-agenda-max-entries 5)
                      (org-agenda-skip-function
                       '(lambda ()
-                         (or (org-agenda-skip-entry-if 'regexp' "Projects")
-                             (org-agenda-skip-entry-if 'regexp' "Actions"))))
+                         (org-agenda-skip-entry-if 'nottodo 'any)))
 
                      ))
 
