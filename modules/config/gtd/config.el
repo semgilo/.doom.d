@@ -67,6 +67,21 @@
                              (org-gtd-trash-file :maxlevel . 3)
                              (org-gtd-favorite-file :maxlevel . 3))))
 
+
+(after! org
+  (setq org-tag-alist '((:startgroup . nil)
+                      ("@office" . ?o) ("@home" . ?h)
+                      (:endgroup . nil)
+                      (:startgroup . nil)
+                      ("work" . ?w) ("life" . ?l) ("study" . ?s)
+                      (:endgroup . nil)
+                      ("issue" . ?i) ("feature" . ?f))
+        org-tag-faces '(("@office" . "blue")
+                        ("@home" . "blue")
+                        ("work" . "green")
+                        ("study" . "green")
+                        ("life" . "green"))))
+
 ;;; Refiling
 (defun semgilo/org-refile-to-datetree (&optional file)
   "Refile a subtree to a datetree corresponding to it's timestamp.
@@ -91,7 +106,6 @@ is nil, refile in the current file."
         (widen)
         ))
     (save-buffer)
-    (kill-current-buffer)
     (switch-to-buffer "*Org Agenda(g)*")
     (org-agenda-redo-all)
     )
