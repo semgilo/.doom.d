@@ -44,6 +44,20 @@
 (defconst org-gtd-favorite-file (expand-file-name "favorite.org" org-gtd-home))
 (defconst org-gtd-history-file (expand-file-name "history.org" org-gtd-home))
 
+(after! org
+  (setq org-bullets-bullet-list '("☰" "☷" "☯" "☭")
+        org-ellipsis " ▼ "
+        org-tags-column -77))
+(after! org
+  (setq org-tag-alist '((:startgroup . nil)
+                      ("work" . ?w) ("life" . ?l) ("study" . ?s)
+                      (:endgroup . nil)
+                      ("issue" . ?i) ("feature" . ?f))))
+(after! org
+  (add-to-list 'org-tag-faces '("work" . (:foreground "cyan")))
+  (add-to-list 'org-tag-faces '("study" . (:foreground "cyan")))
+  (add-to-list 'org-tag-faces '("life" . (:foreground "cyan"))))
+
 ;; blog root
 (defconst blog-root
   (if-let (IS-WINDOWS)
