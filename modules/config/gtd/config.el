@@ -127,7 +127,7 @@ is nil, refile in the current file."
     (semgilo/org-refile org-gtd-calender-file "Actions"))
   (when (string= org-state "PROJECT")
     (semgilo/org-refile org-gtd-calender-file "Projects"))
-  (when (or (string= org-state "DONE") (string= org-state "CANCEL"))
+  (when (or (string= org-state "DONE") (string= org-state "CANCELLED"))
     (semgilo/org-refile-to-datetree org-gtd-history-file))
   )
 

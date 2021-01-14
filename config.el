@@ -47,7 +47,8 @@
 (after! org
   (setq org-bullets-bullet-list '("☰" "☷" "☯" "☭")
         org-ellipsis " ▼ "
-        org-tags-column -77))
+        org-tags-column -77
+        org-agenda-tags-column -77))
 
 ;; blog root
 (defconst blog-root
@@ -98,3 +99,20 @@
 ;; valign
 (use-package! valign)
 (add-hook 'org-mode-hook #'valign-mode)
+
+;; show-in-finder
+(defun show-in-explorer (path)
+  "Show path in explorer (window platform)"
+  (call-process-shell-command (format "explorer.exe %s" (replace-regexp-in-string "\/" "\\\\" path))))
+
+(defun show-current-buffer-in-explorer ()
+  (interactive)
+  "Show current buff in explorer"
+  (progn
+    (setq path (replace-string  "\/" "\\" (file-name-directory (buffer-file-name))\message path)
+    (show-in-explorer path)
+    ))
+
+(map! :leader "C-o" #'show-current-buffer-in-explorer)
+
+(defun run-client() )
