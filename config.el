@@ -47,7 +47,8 @@
 (after! org
   (setq org-bullets-bullet-list '("☰" "☷" "☯" "☭")
         org-ellipsis " ▼ "
-        org-tags-column -77))
+        org-tags-column -77
+        org-agenda-tags-column -77))
 
 ;; blog root
 (defconst blog-root
@@ -110,6 +111,20 @@
     (map! :leader "C-t" #'go-translate)
     (map! :leader "C-p" #'go-translate-popup))
 
-;; (setq url-proxy-services
-;;       '(("http"     . "127.0.0.1:1081")
-;;         ("https"    . "127.0.0.1:1081")))
+;; show-in-finder
+(defun show-in-explorer (path)
+  "Show path in explorer (window platform)"
+  (call-process-shell-command (format "explorer.exe %s" (replace-regexp-in-string "\/" "\\\\" path))))
+
+(defun show-current-buffer-in-explorer ()
+  (interactive)
+  "Show current buff in explorer"
+  (progn
+    (setq path (file-name-directory (buffer-file-name)))
+    (when IS-WINDOWS
+      (show-in-explorer path))
+    (when IS-MAC
+      (message "todo show-in-finder"))
+    ))
+
+(map! :leader "C-o" #'show-current-buffer-in-explorer)

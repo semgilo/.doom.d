@@ -183,5 +183,5 @@
        ;;literate
        blog
        gtd
-       
+       qc
        (default +bindings +smartparens))
