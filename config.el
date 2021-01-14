@@ -109,10 +109,12 @@
   (interactive)
   "Show current buff in explorer"
   (progn
-    (setq path (replace-string  "\/" "\\" (file-name-directory (buffer-file-name))\message path)
-    (show-in-explorer path)
+    (setq path (file-name-directory (buffer-file-name)))
+    (when IS-WINDOWS
+      (show-in-explorer path))
+    (when IS-MAC
+      (message "todo show-in-finder"))
     ))
 
 (map! :leader "C-o" #'show-current-buffer-in-explorer)
 
-(defun run-client() )
