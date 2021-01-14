@@ -98,3 +98,18 @@
 ;; valign
 (use-package! valign)
 (add-hook 'org-mode-hook #'valign-mode)
+
+;; go-translate
+(use-package! go-translate
+  :commands (go-translate go-translate-popup)
+  :config
+    (setq go-translate-base-url "http://translate.google.cn")
+    (setq go-translate-local-language "zh-CN")
+    (setq go-translate-buffer-follow-p t)
+    (setq go-translate-token-current (cons 430675 2721866130))
+    (map! :leader "C-t" #'go-translate)
+    (map! :leader "C-p" #'go-translate-popup))
+
+;; (setq url-proxy-services
+;;       '(("http"     . "127.0.0.1:1081")
+;;         ("https"    . "127.0.0.1:1081")))

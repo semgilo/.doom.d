@@ -49,3 +49,6 @@
 ;; ...Or *all* packages (NOT RECOMMENDED; will likely break things)
 ;(unpin! t)
 (package! valign)
+(package! go-translate
+  :recipe (:host github :repo "lorniu/go-translate"))
+(package! posframe)
