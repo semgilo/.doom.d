@@ -108,8 +108,10 @@
     (setq go-translate-local-language "zh-CN")
     (setq go-translate-buffer-follow-p t)
     (setq go-translate-token-current (cons 430675 2721866130))
-    (map! :leader "C-t" #'go-translate)
-    (map! :leader "C-p" #'go-translate-popup))
+    )
+
+(map! :leader "C-t" #'go-translate)
+(map! :leader "C-p" #'go-translate-popup)
 
 ;; show-in-finder
 (defun show-in-explorer (path)
@@ -128,3 +130,5 @@
     ))
 
 (map! :leader "C-o" #'show-current-buffer-in-explorer)
+
+(custom-set-variables '(company-lua-executable (executable-find "lua")))
