@@ -51,4 +51,5 @@
 (package! valign)
 (package! go-translate
   :recipe (:host github :repo "lorniu/go-translate"))
-(package! posframe)
+(package! posframe
+  :recipe (:host github :repo "casouri/valign"))

@@ -131,4 +131,8 @@
 
 (map! :leader "C-o" #'show-current-buffer-in-explorer)
 
-(custom-set-variables '(company-lua-executable (executable-find "lua")))
+
+;; lua
+(after! lua-mode-hook
+  (set-company-backend! 'lua-mode '(company-lua company-yasnippet company-dabbrev-code company-etags))
+  (setq lua-indent-level 4))
