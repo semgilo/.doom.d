@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: ipair
+# uuid: lua-ipair
+# key: ipair
+# condition: t
+# --
+for ${1:i}, ${2:v} in ipair(${3:t}) do
+    ${4:print(i, v)}
+end

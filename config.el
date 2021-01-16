@@ -133,6 +133,6 @@
 
 
 ;; lua
-(after! lua-mode-hook
+(after! lua-mode
   (set-company-backend! 'lua-mode '(company-lua company-yasnippet company-dabbrev-code company-etags))
   (setq lua-indent-level 4))
