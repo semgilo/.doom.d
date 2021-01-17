@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: TAG
+# key: TAG
+# condition: t
+# --
+local TAG = "`(file-name-nondirectory (file-name-sans-extension (buffer-file-name)))`"

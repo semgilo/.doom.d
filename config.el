@@ -7,8 +7,9 @@
 ;; Some functionality uses this to identify you, e.g. GPG configuration, email
 ;; clients, file templates and snippets.
 (setq user-full-name "Donghai Ruan"
+      user-simple-name "ruandh"
+      user-nick-name "semgilo"
       user-mail-address "9737935@qq.com")
-
 ;; Doom exposes five (optional) variables for controlling fonts in Doom. Here
 ;; are the three important ones:
 ;;
@@ -26,7 +27,6 @@
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
 (setq doom-theme 'doom-one)
-
 
 ;; font
 
@@ -136,3 +136,7 @@
 (after! lua-mode
   (set-company-backend! 'lua-mode '(company-lua company-yasnippet company-dabbrev-code company-etags))
   (setq lua-indent-level 4))
+
+;; evil
+(evil-define-key 'insert global-map (kbd "C-p") 'previous-line)
+(evil-define-key 'insert global-map (kbd "C-n") 'next-line)

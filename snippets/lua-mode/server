@@ -1,0 +1,19 @@
+# -*- mode: snippet -*-
+# name: skynet server
+# key: server
+# condition: t
+# --
+local skynet = require "wrapper.skynet"
+local CServer = requrie "server.Server"
+local TAG = "`(file-name-nondirectory (file-name-sans-extension (buffer-file-name)))`"
+local C${1:name} = class("$1")
+
+function C$1:ctor(...)
+    C$1.super.ctor(self, ...)
+end
+
+function C$1:onStart(...)
+    C$1.super.onStart(self, ..)
+end
+
+return C$1

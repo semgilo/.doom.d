@@ -1,0 +1,6 @@
+# key: header
+# name: header
+# --
+-- `(file-name-nondirectory buffer-file-name)`
+-- Created by `user-full-name` on `(current-time-string)`
+-- $(2:describle)
