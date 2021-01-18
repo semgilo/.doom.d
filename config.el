@@ -83,10 +83,13 @@
 
 
 ;; set projectile global ignore files
-(dolist (suff '(".obj" ".class" ".so" ".dSYM" ".tlog" ".log" ".png" ".jpg" ".csb" ".csd" ".elc" ".pyc" ".a"))
-  (add-to-list 'projectile-globally-ignored-file-suffixes suff))
-(dolist (suff '("luaclib"))
-  (add-to-list 'projectile-globally-ignored-directories suff))
+(after! projectile
+  (dolist (suff '(".obj" ".class" ".so" ".dSYM" ".tlog" ".log" ".png" ".jpg" ".csb" ".csd" ".elc" ".pyc" ".a"))
+    (add-to-list 'projectile-globally-ignored-file-suffixes suff))
+
+  (dolist (dir '("luaclib"))
+    (add-to-list 'projectile-globally-ignored-directories dir)))
+
 
 ;; exit and not ask.
 (setq confirm-kill-emacs nil)
