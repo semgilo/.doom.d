@@ -83,12 +83,10 @@
 
 
 ;; set projectile global ignore files
-(setq ignored-file-suffixes '(list ".obj" ".class"))
-
-;; (defun semgilo/add-to-ignored-file-suffixes (name)
-  ;; (add-to-list 'projectile-globally-ignored-file-suffixes name))
-;; (mapcar 'semgilo/add-to-ignored-file-suffixes ignored-file-suffixes)
-;; (add-to-list 'projectile-globally-ignored-file-suffixes '(".obj" ".class" ".tlog" ".log"))
+(dolist (suff '(".obj" ".class" ".so" ".dSYM" ".tlog" ".log" ".png" ".jpg" ".csb" ".csd" ".elc" ".pyc" ".a"))
+  (add-to-list 'projectile-globally-ignored-file-suffixes suff))
+(dolist (suff '("luaclib"))
+  (add-to-list 'projectile-globally-ignored-directories suff))
 
 ;; exit and not ask.
 (setq confirm-kill-emacs nil)
@@ -140,3 +138,4 @@
 ;; evil
 (evil-define-key 'insert global-map (kbd "C-p") 'previous-line)
 (evil-define-key 'insert global-map (kbd "C-n") 'next-line)
+(evil-define-key 'motion global-map (kbd "+") 'er/expand-region)
