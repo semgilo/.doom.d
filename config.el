@@ -84,7 +84,7 @@
 
 ;; set projectile global ignore files
 (after! projectile
-  (dolist (suff '(".obj" ".class" ".so" ".dSYM" ".tlog" ".log" ".png" ".jpg" ".csb" ".csd" ".elc" ".pyc" ".a"))
+  (dolist (suff '(".obj" ".class" ".so" ".dSYM" ".tlog" ".log" ".png" ".jpg" ".csb" ".csd" ".elc" ".pyc" ".a" ".luac"))
     (add-to-list 'projectile-globally-ignored-file-suffixes suff))
 
   (dolist (dir '("luaclib"))
