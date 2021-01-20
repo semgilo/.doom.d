@@ -48,11 +48,13 @@
 ;(unpin! pinned-package another-pinned-package)
 ;; ...Or *all* packages (NOT RECOMMENDED; will likely break things)
 ;(unpin! t)
-(package! valign)
+(package! valign
+  :recipe (:host github :repo "casouri/valign"))
+
+;; go-translate
 (package! go-translate
   :recipe (:host github :repo "lorniu/go-translate"))
-(package! posframe
-  :recipe (:host github :repo "casouri/valign"))
+(package! posframe)
 
 ;; Snails
 (package! snails

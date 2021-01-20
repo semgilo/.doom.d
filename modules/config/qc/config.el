@@ -20,6 +20,17 @@
   )
 (map! :leader "C-s" #'qc/launch-server)
 
+;; pack android apk
+(defun qc/pack-android(&optional channel)
+  (interactive "sChannel(default qc)):")
+  (if (string= channel "")
+      (setq channel "qc"))
+  (setq path (file-name-directory (buffer-file-name)))
+  (setq root-path (substring path 0 (string-match "[\w/\\]+?client" path)))
+  (setq bat-path (format "%s/client/build/android/pack_%s.bat" root-path channel))
+  (message bat-path)
+  (call-process-shell-command bat-path))
+
 ;; svn update
 (defun qc/update-project()
   (interactive)

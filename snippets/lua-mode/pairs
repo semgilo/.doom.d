@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: pairs
+# key: for
+# --
+for ${1:k}, ${2:v} in pairs(${3:t}) do
+    ${4:print(k, v)}
+end
