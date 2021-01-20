@@ -53,3 +53,7 @@
   :recipe (:host github :repo "lorniu/go-translate"))
 (package! posframe
   :recipe (:host github :repo "casouri/valign"))
+
+;; Snails
+(package! snails
+  :recipe (:host github :repo "manateelazycat/snails" :no-byte-compile t))

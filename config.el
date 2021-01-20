@@ -142,3 +142,7 @@
 (evil-define-key 'insert global-map (kbd "C-p") 'previous-line)
 (evil-define-key 'insert global-map (kbd "C-n") 'next-line)
 (evil-define-key 'motion global-map (kbd "+") 'er/expand-region)
+
+;; Snails
+(use-package! snails)
+(add-hook 'snails-mode-hook #'evil-emacs-state)
