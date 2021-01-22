@@ -8,7 +8,6 @@
   (message bat-path)
   (call-process-shell-command bat-path)
   )
-(map! :leader "C-c" #'qc/launch-client)
 
 ;; launch server
 (defun qc/launch-server()
@@ -18,13 +17,13 @@
   (setq server-path (format "%s/server" root-path))
   (call-process-shell-command (format "cd %s&start start_gs.bat" server-path))
   )
-(map! :leader "C-s" #'qc/launch-server)
 
 ;; pack android apk
 (defun qc/pack-android(&optional channel)
-  (interactive)
-  (let ((choice (completing-read-multiple "Select: " '("qc" "qc_official" "lt"))))
-    (setq channel choice))
+  (interactive
+   (list (completing-read "Choose: "
+                          '("qc" "qc_official" "lt") nil t)))
+  (message channel)
   (if (string= channel "")
       (setq channel "qc"))
   (setq path (file-name-directory (buffer-file-name)))
@@ -32,7 +31,18 @@
   (setq android-build-root (format "%s/client/build/android" root-path))
   (call-process-shell-command (format "cd %s&start pack_%s.bat" android-build-root channel)))
 
-(map! :map doom-leader-quit/session-map "p" #'qc/pack-android)
+;; build ios src
+(defun qc/build-ios-src(&optional channel)
+  (interactive
+   (list (completing-read "Choose: "
+                          '("qc" "qc_official" "lt") nil t)))
+  (message channel)
+  (if (string= channel "")
+      (setq channel "qc"))
+  (setq path (file-name-directory (buffer-file-name)))
+  (setq root-path (substring path 0 (string-match "[\w/\\]+?client" path)))
+  (setq android-build-root (format "%s/client/build/ios" root-path))
+  (call-process-shell-command (format "cd %s&start build_src_%s_with_new.bat" android-build-root channel)))
 
 ;; svn update
 (defun qc/update-project()
@@ -42,4 +52,10 @@
   (message root-path)
   (call-process-shell-command (format "TortoiseProc.exe /command:update /path:\"%s\" /closeonend:2" root-path))
   )
-(map! :leader "C-u" #'qc/update-project)
+
+(map! :leader
+      (:prefix-map ("m" . "mine")
+       :desc "qcplay pack android"             "p" #'qc/pack-android
+       :desc "qcplay update project"           "u" #'qc/update-project
+       :desc "qcplay launch client"            "c" #'qc/launch-client
+       :desc "qcplay launch server"            "s" #'qc/launch-server))
