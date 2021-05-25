@@ -18,15 +18,13 @@
 ;; (dolist (i '("actions" "projects")) (insert i))
 
 (after! org
-  (semgilo/create-gtd-file-if-not-exist org-gtd-inbox-file "Inbox" "INBOX")
-  (semgilo/create-gtd-file-if-not-exist org-gtd-calender-file "Calender" "CALENDER" '("Actions" "Projects"))
-  (semgilo/create-gtd-file-if-not-exist org-gtd-history-file "History" "HISTORY")
   (semgilo/create-gtd-file-if-not-exist org-gtd-favorite-file "Favorite" "FAVORITE")
-  (semgilo/create-gtd-file-if-not-exist org-gtd-trash-file "Trash" "TRASH"))
+  (semgilo/create-gtd-file-if-not-exist org-gtd-history-file "History" "HISTORY")
+  (semgilo/create-gtd-file-if-not-exist org-gtd-file "gtd" "GTD" '("Inbox" "Calender" "Trash")))
 
 (after! org
   ;; To speed up startup, don't put to init section
-  (setq org-agenda-files (setq  org-agenda-files (list org-gtd-home))
+  (setq org-agenda-files (setq org-agenda-files (directory-files-recursively org-directory "\\.org$"))
         org-todo-keywords
         '((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d!/!)")
           (sequence "PROJECT(p)" "|" "DONE(d!/!)" "CANCELLED(c@/!)")
@@ -50,7 +48,7 @@
 ;; capture templates
 (after! org
   (setq org-capture-templates
-    `(("t" "todo" entry (file org-gtd-inbox-file) ; "" => `org-default-notes-file'
+    `(("t" "todo" entry (file+headline org-gtd-file "Inbox") ; "" => `org-default-notes-file'
        "* TODO %?" :clock-resume t)
       ("i" "idea" entry (file+headline org-gtd-favorite-file "Ideas")
        "* %? :IDEA\n%T\n" :clock-resume t)
@@ -61,12 +59,7 @@
       )))
 
 (after! org
-  (setq org-refile-targets '((org-gtd-calender-file :level . 1)
-                             (org-gtd-draft-file :maxlevel . 1)
-                             (org-gtd-history-file :level . 1)
-                             (org-gtd-trash-file :maxlevel . 3)
-                             (org-gtd-favorite-file :maxlevel . 3))))
-
+  (setq org-refile-targets '((org-gtd-file :level . 1))))
 
 (after! org
   (setq org-tag-alist '((:startgroup . nil)
@@ -111,6 +104,32 @@ is nil, refile in the current file."
     )
   )
 
+(defun semgilo/org-refile-to-datetree-quiet ()
+  "Refile a subtree to a datetree corresponding to it's timestamp.
+The current time is used if the entry has no timestamp. If FILE
+is nil, refile in the current file."
+  (interactive)
+  (let* ((datetree-date (or (org-entry-get nil "CLOSED" t)
+                            (org-read-date t nil "now")))
+         (date (org-date-to-gregorian datetree-date))
+         )
+    (with-current-buffer (current-buffer)
+      (save-excursion
+        (org-cut-subtree)
+        (org-datetree-find-date-create date)
+        (org-narrow-to-subtree)
+        (show-subtree)
+        (org-end-of-subtree t)
+        (newline)
+        (goto-char (point-max))
+        (org-paste-subtree 4)
+        (widen)
+        ))
+    (save-buffer)
+    )
+  )
+
+
 (defun semgilo/org-refile (file headline &optional arg)
   (let ((pos (save-excursion
                (find-file file)
@@ -124,9 +143,9 @@ is nil, refile in the current file."
 (defun semgilo/handle-outline-state-to-next ()
   "When todo keyword from todo to PROJECT/NEXT, refile outline to calender."
   (when (string= org-state "NEXT")
-    (semgilo/org-refile org-gtd-calender-file "Actions"))
+    (semgilo/org-refile org-gtd-file "Calender"))
   (when (string= org-state "PROJECT")
-    (semgilo/org-refile org-gtd-calender-file "Projects"))
+    (semgilo/org-refile org-gtd-file "Calender"))
   (when (or (string= org-state "DONE") (string= org-state "CANCELLED"))
     (semgilo/org-refile-to-datetree org-gtd-history-file))
   )
@@ -165,16 +184,14 @@ is nil, refile in the current file."
 
 (after! org
   (let ((active-project-match "-INBOX/PROJECT"))
-
-    (setq org-stuck-projects
-          `(,active-project-match ("NEXT")))
+    ;; (setq org-stuck-projects
+    ;;       `("")
 
     (setq org-agenda-compact-blocks t
           org-agenda-sticky t
           org-agenda-start-on-weekday nil
           org-agenda-span 'day
           org-agenda-include-diary nil
-          ;;org-agenda-filter-preset '("-FAVORITE")
           org-agenda-sorting-strategy
           '((agenda habit-down time-up user-defined-up effort-up category-keep)
             (todo category-up effort-up)
@@ -184,28 +201,25 @@ is nil, refile in the current file."
           org-agenda-custom-commands
           `(("N" "Notes"
              ((agenda "" nil)
-              (tags "NOTE"
+              (tags "Note"
                     ((org-agenda-overriding-header "Notes")
                      (org-tags-match-list-sublevels t)))))
             ("g" "GTD"
              ((agenda "" nil)
-              (tags "INBOX"
+              (todo "TODO"
                     ((org-agenda-overriding-header "Inbox")
                      (org-tags-match-list-sublevels nil)))
-              (tags-todo "CALENDER"
+              (todo "NEXT|PROJECT"
                          ((org-agenda-overriding-header "Calender")
                           (org-tags-match-list-sublevels nil)))
-              (tags-todo "DRAFT"
+              (todo "WAITING"
                          ((org-agenda-overriding-header "Drafts")
                           (org-tags-match-list-sublevels nil)))
-              (tags-todo "TRASH"
-                         ((org-agenda-overriding-header "Trash")
-                          (org-tags-match-list-sublevels nil)))
-              (tags "HISTORY"
+              (todo "DONE|CANCELLED"
                     ((org-agenda-overriding-header "History")
                      (org-tags-match-list-sublevels t)
                      (org-agenda-max-entries 5)
-                     (org-agenda-sorting-strategy '(timestamp-up))
+                     (org-agenda-sorting-strategy '(timestamp-down))
                      (org-agenda-skip-function
                       '(lambda ()
                          (org-agenda-skip-entry-if 'nottodo 'any)))

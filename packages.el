@@ -57,5 +57,14 @@
 (package! posframe)
 
 ;; Snails
-(package! snails
-  :recipe (:host github :repo "manateelazycat/snails" :no-byte-compile t))
+;; (package! snails
+;;   :recipe (:host github :repo "manateelazycat/snails" :no-byte-compile t))
+
+;; eaf
+; (package! epc)
+; (package! ctable)
+; (package! deferred)
+; (package! eaf
+;   :recipe (:host github
+;           :repo "manateelazycat/emacs-application-framework"
+;           :files ("*")))
