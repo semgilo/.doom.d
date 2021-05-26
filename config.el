@@ -200,3 +200,6 @@
 ;;             ("image-viewer" (kbd eaf-evil-leader-key))
 ;;             (_  (kbd "SPC")))
 ;;         (kbd "SPC"))))
+
+;; search chinese by rg
+(modify-coding-system-alist 'process "rg" '(utf-8 . chinese-gbk-dos))
