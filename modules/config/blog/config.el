@@ -1,11 +1,12 @@
 ;;; config/gtd/config.el -*- lexical-binding: t; -*-
 
-(defun semgilo/hugo-new-post (name)
+;; hugo blog
+(defun semgilo/hugo-new-share (name)
   (interactive "sInput post name: ")
   (setq fullpath
         (concat
-         blog-root
-         "/content-org/"
+         org-directory
+         "share"
          name
          ".org"))
   (find-file fullpath)
@@ -15,12 +16,42 @@
   (interactive "sInput note name: ")
   (setq fullpath
         (concat
-         blog-root
-         "/content-org/notes"
+         org-directory
+         "/notes"
          name
          ".org"))
   (find-file fullpath)
-  (yas-insert-snippet 'hugo-note))
+  (yas-insert-snippet 'hugo))
+
+
+(defun semgilo/hugo-publish-posts (&optional blog-base-dir)
+  (interactive "sInput note name: ")
+  (if (equal blog-base-dir "")
+      (setq blog-base-dir blog-root))
+
+  (setq content-org-dir
+        (concat
+         blog-base-dir
+         "/content-org"))
+
+  (setq org-notes-dir (concat org-directory "/notes"))
+  (setq org-share-dir (concat org-directory "/share"))
+  (if (file-exists-p content-org-dir)
+      (delete-directory content-org-dir t)
+    )
+  (make-directory content-org-dir)
+  (copy-directory org-notes-dir (concat content-org-dir "/notes"))
+  (copy-directory org-share-dir (concat content-org-dir "/share"))
+
+  (dolist (file (directory-files-recursively content-org-dir ".org"))
+    (when (or (string-match-p "/notes/" file)
+              (string-match-p "/share/" file))
+      (message file)
+      (find-file file)
+      (org-hugo-export-to-md)
+      (kill-current-buffer))
+  ))
+
 
 (defun semgilo/insert-org-img-link (path)
   (if (equal (file-name-extension (buffer-file-name)) "org")
