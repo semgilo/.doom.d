@@ -6,22 +6,22 @@
   (setq fullpath
         (concat
          org-directory
-         "share"
+         "/share/"
          name
          ".org"))
   (find-file fullpath)
-  (yas-insert-snippet 'hugo))
+  (yas-insert-snippet))
 
 (defun semgilo/hugo-new-note (name)
   (interactive "sInput note name: ")
   (setq fullpath
         (concat
          org-directory
-         "/notes"
+         "/notes/"
          name
          ".org"))
   (find-file fullpath)
-  (yas-insert-snippet 'hugo))
+  (yas-insert-snippet))
 
 
 (defun semgilo/hugo-publish-posts (&optional blog-base-dir)
@@ -51,7 +51,6 @@
       (org-hugo-export-to-md)
       (kill-current-buffer))
   ))
-
 
 (defun semgilo/insert-org-img-link (path)
   (if (equal (file-name-extension (buffer-file-name)) "org")
