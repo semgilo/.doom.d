@@ -56,6 +56,8 @@
   :recipe (:host github :repo "lorniu/go-translate"))
 (package! posframe)
 
+(package! magit-section)
+
 ;; Snails
 ;; (package! snails
 ;;   :recipe (:host github :repo "manateelazycat/snails" :no-byte-compile t))
@@ -68,3 +70,6 @@
 ;   :recipe (:host github
 ;           :repo "manateelazycat/emacs-application-framework"
 ;           :files ("*")))
+
+; (package! netease-cloud-music
+;   :recipe (:host github :repo "SpringHan/netease-cloud-music.el"))
