@@ -203,3 +203,5 @@
 
 ;; search chinese by rg
 (modify-coding-system-alist 'process "rg" '(utf-8 . chinese-gbk-dos))
+
+(setq plantuml-default-exec-mode 'jar)

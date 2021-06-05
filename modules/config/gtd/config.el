@@ -219,7 +219,7 @@ is nil, refile in the current file."
                     ((org-agenda-overriding-header "History")
                      (org-tags-match-list-sublevels t)
                      (org-agenda-max-entries 5)
-                     (org-agenda-sorting-strategy '(timestamp-down))
+                     (org-agenda-sorting-strategy '(timestamp-up))
                      (org-agenda-skip-function
                       '(lambda ()
                          (org-agenda-skip-entry-if 'nottodo 'any)))
