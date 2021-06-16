@@ -25,7 +25,7 @@
 
 
 (defun semgilo/hugo-publish-posts (&optional blog-base-dir)
-  (interactive "sInput note name: ")
+  (interactive "sInpup blog base dir: ")
   (if (equal blog-base-dir "")
       (setq blog-base-dir blog-root))
 
