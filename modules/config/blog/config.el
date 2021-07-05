@@ -23,9 +23,8 @@
   (find-file fullpath)
   (yas-insert-snippet))
 
-
 (defun semgilo/hugo-publish-posts (&optional blog-base-dir)
-  (interactive "sInpup blog base dir: ")
+  (interactive "sInput note name: ")
   (if (equal blog-base-dir "")
       (setq blog-base-dir blog-root))
 

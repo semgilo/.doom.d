@@ -58,6 +58,9 @@
 
 (package! magit-section)
 
+(package! citre
+  :recipe (:host github :repo "universal-ctags/citre"))
+
 ;; Snails
 ;; (package! snails
 ;;   :recipe (:host github :repo "manateelazycat/snails" :no-byte-compile t))
