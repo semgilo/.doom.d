@@ -1,0 +1,32 @@
+# key: form
+# name: form
+# --
+-- `(file-name-nondirectory buffer-file-name)`
+-- Created by `user-simple-name`, `(format-time-string "%Y-%m-%d")`
+-- ${1:describle}
+
+`(file-name-base buffer-file-name)` = class("`(file-name-base buffer-file-name)`", BaseForm)
+
+`(file-name-base buffer-file-name)`.__attribs = {
+    -- gameObject = "GameObject"
+}
+
+function `(file-name-base buffer-file-name)`:init(...)
+
+end
+
+function `(file-name-base buffer-file-name)`:onStart()
+    `(file-name-base buffer-file-name)`.super.onStart(self)
+end
+
+function `(file-name-base buffer-file-name)`:onUpdate(dt)
+     `(file-name-base buffer-file-name)`.super.onUpdate(self, dt)
+end
+
+function `(file-name-base buffer-file-name)`:registerGameEvents(dt)
+
+end
+
+function `(file-name-base buffer-file-name)`:registerUIEvents(dt)
+
+end

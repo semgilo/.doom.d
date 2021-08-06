@@ -85,7 +85,7 @@
 
 ;; set projectile global ignore files
 (after! projectile-mode
-  (dolist (suff '(".obj" ".class" ".so" ".dSYM" ".tlog" ".log" ".png" ".jpg" ".csb" ".csd" ".elc" ".pyc" ".a" ".luac" ".meta"))
+  (dolist (suff '(".obj" ".class" ".so" ".dSYM" ".tlog" ".log" ".png" ".jpg" ".csb" ".csd" ".elc" ".pyc" ".a" ".luac" ".meta" ".lua.meta"))
     (add-to-list 'projectile-globally-ignored-file-suffixes suff))
 
   (dolist (dir '("luaclib"))
@@ -113,26 +113,19 @@
     )
 
 ;; citre
-(use-package! citre
-  :init
-  (require 'citre-config)
-  :config
-  (setq
-   ;; Set this if readtags is not in your path.
-   ;; citre-readtags-program "/path/to/readtags"
-   ;; Set this if you use project management plugin like projectile.  It's
-   ;; only used to display paths relatively, and doesn't affect actual use.
-   citre-project-root-function #'projectile-project-root))
+;; (use-package! citre
+;;   :init
+;;   (require 'citre-config)
+;;   :config
+;;   (setq
+;;    citre-tags-file-cache-dirs "~/tags"
+;;    ;; Set this if readtags is not in your path.
+;;    ;; citre-readtags-program "/path/to/readtags"
+;;    ;; Set this if you use project management plugin like projectile.  It's
+;;    ;; only used to display paths relatively, and doesn't affect actual use.
+;;    citre-project-root-function #'projectile-project-root))
 
-(defun my-create-tags ()
-"Create tags file."
-(interactive)
-(let ((select-dir (read-directory-name "Select root directory: "))
-      (select-language (read-string "Input language: ")))
-  (shell-command (format "ctags -f .tags --languages=%s -e -R %s" select-language (directory-file-name select-dir))))
-)
-
-(add-hook 'find-file-hook #'citre-auto-enable-citre-mode)
+;; (add-hook 'find-file-hook #'citre-auto-enable-citre-mode)
 
 (map! :leader "C-t" #'go-translate)
 (map! :leader "C-p" #'go-translate-popup)

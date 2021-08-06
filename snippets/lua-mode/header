@@ -2,5 +2,5 @@
 # name: header
 # --
 -- `(file-name-nondirectory buffer-file-name)`
--- Created by `user-simple-name`, `(format-time-string "%Y-%m-%d")`
+-- Created by `user-simple-name` `(format-time-string "%Y-%m-%d")`
 -- ${1:describle}
