@@ -147,6 +147,13 @@
   "Show path in explorer (window platform)"
   (call-process-shell-command (format "explorer.exe %s" (replace-regexp-in-string "\/" "\\\\" path))))
 
+;; show-in-finder
+(defun show-in-finder (path)
+  (interactive)
+  "Show path in explorer (macosx platform)"
+  (message path)
+  (call-process-shell-command (format "open %s" path)))
+
 (defun show-current-buffer-in-explorer ()
   (interactive)
   "Show current buff in explorer"
@@ -155,7 +162,7 @@
     (when IS-WINDOWS
       (show-in-explorer path))
     (when IS-MAC
-      (message "todo show-in-finder"))
+      (show-in-finder path))
     ))
 
 (map! :leader "C-o" #'show-current-buffer-in-explorer)
