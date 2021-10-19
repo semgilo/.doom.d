@@ -1,8 +1,8 @@
-# key: form
-# name: form
+# key: behaviour
+# name: behaviour
 # --
 -- `(file-name-nondirectory buffer-file-name)`
--- Created by `user-simple-name` `(format-time-string "%Y-%m-%d")`
+-- Created by `user-simple-name`, `(format-time-string "%Y-%m-%d")`
 -- ${1:describle}
 
 local PURE_FILE = `(file-name-base buffer-file-name)`;
@@ -13,22 +13,10 @@ local PURE_FILE = `(file-name-base buffer-file-name)`;
     -- gameObject = "GameObject"
 }
 
-function `(file-name-base buffer-file-name)`:init(...)
-
-end
-
 function `(file-name-base buffer-file-name)`:onStart()
     `(file-name-base buffer-file-name)`.super.onStart(self);
 end
 
 function `(file-name-base buffer-file-name)`:onUpdate(dt)
      `(file-name-base buffer-file-name)`.super.onUpdate(self, dt);
-end
-
-function `(file-name-base buffer-file-name)`:registerGameEvents(dt)
-
-end
-
-function `(file-name-base buffer-file-name)`:registerUIEvents(dt)
-
 end

@@ -84,7 +84,7 @@
 
 
 ;; set projectile global ignore files
-(after! projectile-mode
+(after! prog-mode-hook
   (dolist (suff '(".obj" ".class" ".so" ".dSYM" ".tlog" ".log" ".png" ".jpg" ".csb" ".csd" ".elc" ".pyc" ".a" ".luac" ".meta" ".lua.meta"))
     (add-to-list 'projectile-globally-ignored-file-suffixes suff))
 
@@ -116,16 +116,28 @@
 ;; (use-package! citre
 ;;   :init
 ;;   (require 'citre-config)
+;;   ;; (evil-define-key 'insert global-map (kbd "C-p") 'previous-line)
+;;   ;; (evil-define-key 'insert global-map (kbd "C-n") 'next-line)
+;;   (map! :leader (:prefix-map ("c" . "code")
+;;                  :desc "citre jump" "j" #'citre-jump
+;;                  :desc "citre jump back" "J" #'citre-jump-back
+;;                  :desc "citre peek" "p" #'citre-ace-peek))
 ;;   :config
 ;;   (setq
-;;    citre-tags-file-cache-dirs "~/tags"
-;;    ;; Set this if readtags is not in your path.
-;;    ;; citre-readtags-program "/path/to/readtags"
 ;;    ;; Set this if you use project management plugin like projectile.  It's
-;;    ;; only used to display paths relatively, and doesn't affect actual use.
-;;    citre-project-root-function #'projectile-project-root))
+;;    ;; used for things like displaying paths relatively, see its docstring.
+;;    citre-project-root-function #'projectile-project-root
+;;    ;; Set this if you want to always use one location to create a tags file.
+;;    citre-default-create-tags-file-location 'global-cache
+;;    ;; See the "Create tags file" section above to know these options
+;;    citre-use-project-root-when-creating-tags t
+;;    citre-prompt-language-for-ctags-command t
+;;    ;; By default, when you open any file, and a tags file can be found for it,
+;;    ;; `citre-mode' is automatically enabled.  If you only want this to work for
+;;    ;; certain modes (like `prog-mode'), set it like this.
+;;    citre-auto-enable-citre-mode-modes '(prog-mode)))
 
-;; (add-hook 'find-file-hook #'citre-auto-enable-citre-mode)
+(add-hook 'find-file-hook #'citre-auto-enable-citre-mode)
 
 (map! :leader "C-t" #'go-translate)
 (map! :leader "C-p" #'go-translate-popup)
@@ -165,6 +177,12 @@
 
   (advice-add #'lua-calculate-indentation-block-modifier
               :around #'lua-at-most-one-indent)
+
+  (dolist (suff '(".obj" ".class" ".so" ".dSYM" ".tlog" ".log" ".png" ".jpg" ".csb" ".csd" ".elc" ".pyc" ".a" ".luac" ".meta" ".lua.meta"))
+    (add-to-list 'projectile-globally-ignored-file-suffixes suff))
+
+  (dolist (dir '("luaclib"))
+    (add-to-list 'projectile-globally-ignored-directories dir))
   )
 
 (after! csharp-mode

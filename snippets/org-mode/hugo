@@ -7,8 +7,8 @@
 #+DATE: `(format-time-string "<%Y-%m-%d %A %T>")`
 #+HUGO_AUTO_SET_LASTMOD: t
 #+HUGO_TAGS: $2
-#+HUGO_CATEGORIES: $3
-#+HUGO_SECTION: ${4:笔记}
+#+HUGO_CATEGORIES: ${3:笔记}
+#+HUGO_SECTION:
 #+HUGO_DRAFT: false
 
 $0
